@@ -35,4 +35,11 @@ select q'[* hi ' kol' lop ]' as example from dual
 select distinct employee_experience from employees1 -- distict works for only one column 
 select  employee_experience from employees1
 select unique employee_experience from employees1
-
+select 'the name of employee is ' || employee_name from employees --concatination
+select employee_id || ',' || employee_name as "Id&Name" from employees
+-- arithmetic expressions +-/*
+select employee_id,employee_experience,employee_experience + 1 as "Current-experience"  from employees1
+select employee_id,employee_salary,(employee_experience + 100) * 12  as "Annual salaryt"  from employees1
+select sysdate from dual 
+select sysdate + 4 from dual --added 4 days
+-- null values return null values with operators

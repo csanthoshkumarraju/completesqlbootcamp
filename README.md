@@ -48,3 +48,43 @@ select * from employees where employee_age > 22;
 select * from employees where employee_age < 22;
 select * from employees1 where employee_experience > 2;
 select * from employees where employee_name = 'jkl'; --duplicate/redudant data is also shown 
+-- comparison operators < ,>,<=,>= , <>,! , between,and,like,is null
+select * from employees where employee_age is null
+select * from employees where employee_age is not null
+--  We can also use dates 
+ALTER TABLE employees1 ADD date_of_joining date; -- adding column to the previous table
+select * from employees1 where date_of_joining is null
+select * from employees1 where date_of_joining is not null
+update employees1 set date_of_joining = to_date('12/01/2022','dd/mm/yyyy') where employee_id =1;
+update employees1 set date_of_joining = to_date('15/04/2022','dd/mm/yyyy') where employee_id =2;
+update employees1 set date_of_joining = to_date('06/06/2022','dd/mm/yyyy') where employee_id =3;
+update employees1 set date_of_joining = to_date('20/09/2022','dd/mm/yyyy') where employee_id =4;
+update employees1 set date_of_joining = to_date('21/11/2022','dd/mm/yyyy') where employee_id =5;
+select * from employees1 where date_of_joining > to_date('10/05/2022','dd/mm/yyyy') 
+select * from employees1 where date_of_joining between to_date('10/01/2022','dd/mm/yyyy') and to_date('10/01/2023','dd/mm/yyyy')
+select * from employees where employee_age <> 22
+select * from employees where employee_age = 22
+select * from employees where employee_age between 24 and 29
+select * from employees where employee_age in (22,24)
+select * from employees where employee_name in ('cgh','tyh')
+select * from employees1 where date_of_joining in (to_date('12/01/2022','dd/mm/yyyy'))
+-- sql like operator
+select * from employees where employee_name like 'a%'
+select * from employees where employee_name like 'c%_h%'
+select * from employees where employee_name like '%d'
+-- logical operators
+select * from employees where employee_name ='bcd' or employee_name = 'abc'
+select * from employees where employee_age = 22 and employee_name ='abc'
+select * from employees where employee_age not in (22,24)
+-- order by 
+select * from employees order by employee_id asc
+select * from employees order by employee_id desc
+select * from employees order by employee_name asc
+select * from employees order by employee_name desc
+select * from employees order by employee_age asc
+select * from employees order by employee_age desc
+select * from employees1 order by employee_experience asc
+select * from employees1 order by employee_experience desc
+select * from employees1 order by date_of_joining asc
+select * from employees1 order by date_of_joining desc
+

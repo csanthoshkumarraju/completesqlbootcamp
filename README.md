@@ -43,3 +43,8 @@ select employee_id,employee_salary,(employee_experience + 100) * 12  as "Annual 
 select sysdate from dual 
 select sysdate + 4 from dual --added 4 days
 -- null values return null values with operators
+-- using where class
+select * from employees where employee_age > 22;
+select * from employees where employee_age < 22;
+select * from employees1 where employee_experience > 2;
+select * from employees where employee_name = 'jkl'; --duplicate/redudant data is also shown 

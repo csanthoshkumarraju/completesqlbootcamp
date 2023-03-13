@@ -87,4 +87,50 @@ select * from employees1 order by employee_experience asc
 select * from employees1 order by employee_experience desc
 select * from employees1 order by date_of_joining asc
 select * from employees1 order by date_of_joining desc
+-- nulls first and last operator
+select * from employees1 order by employee_work_email  nulls first
+insert into employees1 (employee_id,employee_project_name,employee_experience) values (6,'alg',7)
+update employees1 set date_of_joining = to_date('12/03/2023','dd/mm/yyyy') where employee_id = 6;
+select * from employees1 order by employee_work_email asc nulls first
+select * from employees1 order by employee_work_email  nulls last
+select * from employees1 order by employee_work_email desc nulls last
+-- rowid and rownum
+select employee_id,employee_name from employees;
+select employee_id,employee_name,rowid from employees;
+select employee_id,employee_name,rownum from employees;
+select employee_id,employee_name,rowid,rownum from employees;
+select employee_id,employee_name,rowid,rownum from employees order by employee_id asc;
+select employee_id,employee_name,employee_age,rowid,rownum from employees where employee_age > 22;
+-- note : rowid is entire row id this is permanent whatever the query is
+-- rownum is tempory based om the query the rownum is dependent
+select employee_id,employee_project_name,employee_experience,rowid,rownum from employees1 where employee_experience >2 order by employee_experience desc;
+select employee_id,employee_project_name,employee_experience,rowid,rownum from employees1 where rownum <= 4 order by employee_experience desc;
+-- above query getting incorrect data
+select employee_id,employee_project_name,employee_experience,rowid,rownum from 
+(select employee_id,employee_project_name,employee_experience,rowid from employees1 
+order by employee_experience desc) where rownum <= 4 ;
+-- fetch class
+select employee_name,employee_age from employees order by employee_age desc;
+select employee_name,employee_age from employees order by employee_age desc offset 1 row; 
+--offset skip the given rows 
+select employee_name,employee_age from employees order by employee_age desc offset 1 row fetch first 2 rows only; 
+select employee_name,employee_age from employees order by employee_age desc fetch last 2 rows only;
+-- substitution value nothing but input values in programing language
+select * from employees where employee_age = 23 ;
+select * from employees where employee_age = &employee_number;
+-- & used for input value for finding values
+select '&column_name' from '&table_name' 
+-- && used to save the value for repeated variable 
+select '&column_name' from '&table_name' where employee_age between &emp_age and &emp_age + 2;
+-- need to give two inputs for same variable
+select '&column_name' from '&table_name' where employee_age between &&emp_age and &emp_age + 2;
+-- need to give one input for same variable any times 
+-- accept and prompt 
+accept and prompt 'please enter valid employee id' select employee_id,employee_age from employees where employee_id = &emp_id;
+-- define and undefine are used to assign and unassign values
+--  set verify on and off
+set verify on;
+select '&column_name' from '&table_name' 
+set verify off;
+select '&column_name' from '&table_name' 
 

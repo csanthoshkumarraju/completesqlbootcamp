@@ -133,4 +133,61 @@ set verify on;
 select '&column_name' from '&table_name' 
 set verify off;
 select '&column_name' from '&table_name' 
+-- case connversion function
+select employee_name,lower(employee_name),employee_email,lower(employee_email) from employees
+select employee_name,upper(employee_name),employee_email,upper(employee_email) from employees
+select employee_name,initcap(employee_name),employee_email,initcap(employee_email) from employees
+select * from employees where lower(employee_name) = 'bcd'
+select * from employees where upper(employee_name) = 'BCD'
+select * from employees where initcap(employee_name) = 'Bcd'
+-- character functions
+select employee_name,substr(employee_name,1,3) from employees;
+-- index starts at 1
+select employee_name,length(employee_name) from employees;
+select concat(employee_name,employee_email) from employees;
+select employee_name || length(employee_name) || employee_age || employee_email from employees;
+select employee_name,instr(employee_name,'b') from employees;
+select employee_name,trim('   sql course    ') from employees;
+select employee_name,instr('sql course ','e') from employees;
+select employee_name,trim(employee_name) from employees;
+select employee_name,ltrim(employee_name) from employees;
+select employee_name,ltrim('   sql course    ') from employees;
+select employee_name,rtrim(employee_name) from employees;
+select employee_name,rtrim('   sql course    ') from employees;
+select replace('sql cource','q','Q') from dual
+select replace('sql cource','q','Q') from dual
+select employee_name,replace(employee_name,'b','a') from employees;
+select lpad('sqlcource',10,'-') from dual
+select rpad('sqlcource',10,'-') from dual
+select employee_name,lpad(employee_name,2,'-') from employees;
+select round(12.136,2) from dual
+--  round returns ., next numbers and round value
+select round(employee_age,2) from employees
+select trunc(12.136,2) from dual
+-- trunc returns ., next numbers and same value
+select trunc(employee_age,2) from employees
+select ceil(12.136) from dual
+select ceil(employee_age) from employees
+select floor(12.136) from dual
+select floor(employee_age) from employees
+select mod(12,2) from dual
+select mod(employee_age,2) from employees
+-- nested functions
+select employee_name,length(upper(concat(employee_name,employee_email))) as "nested functions" from employees
+select length(instr(substr(employee_name,1,3),'c')) as "instr length" from employees
+--  dates
+select sysdate from dual
+select current_date from dual
+select sessiontimezone from dual
+select systimestamp from dual
+select current_timestamp from dual
+select date_of_joining,add_months(date_of_joining,3) from employees1
+select date_of_joining,months_between(date_of_joining,to_date('12/03/2023','dd/mm/yyyy')) from employees1
+select round(sysdate,'MONTH') from dual
+select date_of_joining,round(date_of_joining,'MONTH') from employees1
+select trunc(sysdate,'MONTH') from dual
+select date_of_joining,trunc(date_of_joining,'MONTH') from employees1
+select extract(month from date_of_joining) from employees1
+select next_day(date_of_joining,'tuesday') from employees1
+select last_day(date_of_joining) from employees1
 

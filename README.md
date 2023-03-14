@@ -190,4 +190,58 @@ select date_of_joining,trunc(date_of_joining,'MONTH') from employees1
 select extract(month from date_of_joining) from employees1
 select next_day(date_of_joining,'tuesday') from employees1
 select last_day(date_of_joining) from employees1
+-- conversion functions
+select * from employees where to_char(employee_age) > '22';
+select date_of_joining,to_char(date_of_joining,'DD') as day ,to_char(date_of_joining,'MM') month ,to_char(date_of_joining,'YYYY') as " year " from employees1;
+select date_of_joining,to_char(date_of_joining,'dd') as day ,to_char(date_of_joining,'mm') month ,to_char(date_of_joining,'yyyy') as " year " from employees1;
+select date_of_joining,to_char(date_of_joining,'Dd') as day ,to_char(date_of_joining,'Mm') month ,to_char(date_of_joining,'Yyyy') as " year " from employees1;
+-- above i have used three different aliases
+select date_of_joining,to_char(date_of_joining,'DAY') as DAY ,to_char(date_of_joining,'MONTH') month ,to_char(date_of_joining,'YEAR') as " year " from employees1;
+select date_of_joining,to_char(date_of_joining,'day') as DAY ,to_char(date_of_joining,'month') month ,to_char(date_of_joining,'year') as " year " from employees1;
+select date_of_joining,to_char(date_of_joining,'Day') as DAY ,to_char(date_of_joining,'Month') month ,to_char(date_of_joining,'Year') as " year " from employees1;
+select date_of_joining,to_char(date_of_joining,'DY') as DAY ,to_char(date_of_joining,'MON') month ,to_char(date_of_joining,'YY') as " year " from employees1;
+select to_number('53333.8') from dual
+-- conditional expression
+select employee_name,
+	case employee_name
+        when 'abc' then 'name is abc'
+        when 'bcd' then 'name is bcd'        
+        when 'tyh' then 'name is tyh'
+		else 'not called' 
+	end as "call"
+from employees
 
+select employee_name ,
+   decode(employee_name,'abc','name is abc',
+                        'bcd','name is bcd') as "called"
+from employees where employee_name in ('abc','bcd') ;
+-- group functions
+select distinct employee_age from employees;
+select distinct(employee_age) from employees;
+select all(employee_age) from employees;
+select count(employee_age) from employees;
+select count(distinct(employee_age)) from employees;
+select count(all(employee_age)) from employees;
+select count(*) from employees
+select avg(employee_age) from employees;
+select avg(distinct(employee_age)) from employees;
+select min(employee_age) from employees;
+select max(employee_age) from employees;
+select max(employee_name) from employees;
+select length(employee_name) from employees;
+select sum(employee_age) from employees;
+select distinct(employee_age),all(employee_age),avg(employee_age) from employees;--error
+select listagg(employee_name,',') within group (order by employee_name) "listagg / concatination " from employees where employee_id > 1;
+select listagg(employee_name,'-') within group (order by employee_name) "listagg / concatination " from employees where employee_id > 1;
+-- grouping data
+select avg(employee_age) , avg(employee_id) from employees
+-- syntax select exp_1,...exp_n  agg_function(agg_expression) from table where condition group by after //select// exp_1,...exp_n //not agg_function order by __;
+select employee_id,avg(employee_age) from employees -- single group function error // need to use  same function or groupby
+select employee_id,avg(employee_age) from employees group by employee_id order by employee_id asc 
+select avg(employee_age) from employees group by employee_id order by employee_id asc 
+select employee_id,avg(employee_age),sum(employee_age)from employees group by employee_id order by employee_id asc 
+-- order of group -->from-->where-->groupby-->having-->select-->orderby--
+select employee_id,avg(employee_age) from employees where avg(employee_age) >20 group by employee_id --error // having comes here
+select employee_id,avg(employee_age) from employees group by employee_id having avg(employee_age) >20
+select employee_id,avg(employee_age) from employees where employee_age> 20 group by employee_id having avg(employee_age) >20
+select max(employee_name) , min(employee_age) from employees group by employee_id

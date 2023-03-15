@@ -245,3 +245,41 @@ select employee_id,avg(employee_age) from employees where avg(employee_age) >20 
 select employee_id,avg(employee_age) from employees group by employee_id having avg(employee_age) >20
 select employee_id,avg(employee_age) from employees where employee_age> 20 group by employee_id having avg(employee_age) >20
 select max(employee_name) , min(employee_age) from employees group by employee_id
+--sql joins
+select * from employees inner join employees1 on employees.employee_id = employees1.employee_id; 
+select * from employees union select * from employees1;
+select * from employees natural join employees1;
+select * from employees join employees1 using (employee_id);
+--ambiguisly defined error occurs when the table names are common in both tables
+--column --for solving ambiguity we give aliases names
+select employees.employee_id,employees.employee_name from employees inner join employees1 on employees.employee_id=employees1.employee_id;
+select * from employees inner join employees1 using (employee_id) 
+--using // avoid aliases joining multiple
+select employees.employee_id,employees.employee_name from employees join employees1 on employee_id= employee1_id join employees2 on employees2_id = employees3_id
+--self join
+select employees.employee_id,employees.employee_name,employees1.employee_project_name,employees1.employee_experience
+from employees join employees1 on (employees.employee_id=employees1.employee_id)
+--not equijoins
+select employees.employee_id,employees.employee_name,employees1.employee_project_name,employees1.employee_experience from employees join employees1 on (employees1.employee_age > employees.employee_id)
+and employees.employee_age employees1. employee_id
+select employee_name from employees join employees1 using(employee_id);
+select * from employees left outer join employees1 on employees.employee_id = employees1.employee_id
+-- left outer join is same as left join we can use any one like alias as or space
+select employees.employee_id,employees.employee_age,employees1.employee_project_name,employees1.employee_experience from employees
+left outer join employees1 on employees.employee_id = employees1.employee_id
+select employees.employee_id,employees.employee_age,employees1.employee_project_name,employees1.employee_experience from employees
+right outer join employees1 on employees.employee_id = employees1.employee_id
+select * from employees right outer join employees1 on employees.employee_id = employees1.employee_id
+select employees.employee_id,employees.employee_age,employees1.employee_project_name,employees1.employee_experience from employees
+full outer join employees1 on employees.employee_id = employees1.employee_id
+select * from employees full outer join employees1 on employees.employee_id = employees1.employee_id
+select * from employees join employees1 on employees.employee_id = employees1.employee_id 
+--cross join example t1(1,2) and t2(3,4) t1 cross join t2 is (1,3;1,4;2,3;2,4)
+create table colour(color_id number,colour_name varchar2(29));
+create table size1(color_id number ,size_name varchar2(29));
+insert into colour values(2,'blue')
+insert into size1 values(4,'extra_large')
+--dangerous tables get large no of columns
+select  colour.color_id,colour.colour_name,size1.color_id,size1.size_name from colour cross join size1
+--old method
+select * from colour,size1

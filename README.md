@@ -283,3 +283,23 @@ insert into size1 values(4,'extra_large')
 select  colour.color_id,colour.colour_name,size1.color_id,size1.size_name from colour cross join size1
 --old method
 select * from colour,size1
+-- old join syntax inner join
+select employees.employee_id,employees.employee_name,employees1.employee_project_name,employees1.employee_experience from employees ,employees1
+where employees.employee_id = employees1.employee_id
+-- got same result but use only  joins syntax
+--we can join multiple tables with old syntax
+-- old join syntax outer join
+--left 
+select employees.employee_id,employees.employee_name,employees1.employee_project_name,employees1.employee_experience from employees ,employees1
+where employees.employee_id = employees1.employee_id(+)
+--right
+select employees.employee_id,employees.employee_name,employees1.employee_project_name,employees1.employee_experience from employees ,employees1
+where employees.employee_id(+) = employees1.employee_id
+--full join 
+select employees.employee_id,employees.employee_name,employees1.employee_project_name,employees1.employee_experience from employees ,employees1
+where employees.employee_id = employees1.employee_id(+) union 
+select employees.employee_id,employees.employee_name,employees1.employee_project_name,employees1.employee_experience from employees ,employees1
+where employees.employee_id(+) = employees1.employee_id
+-- entity relation tables
+--one to many/many to one
+

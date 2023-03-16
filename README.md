@@ -363,5 +363,49 @@ select employee_id,employee_name from employees union
 select employee_id,employee_name from employees union 
           (select employee_id,employee_name from employees minus select employee_id,employee_project_name from employees1)
            order by employee_id asc
+--  create table as select / or copy from previous table
+create table employees3 as select * from employees
+select * from employees3
+create table employees4[(employee_phone)] as select * from employees3 -- got error
+select * from employees4
+create table employees5 as select * from employees where employee_age > 22;
+select * from employees5
+alter table employees1 add project_manager varchar2(30);
+alter table employees1 add (project_tl varchar2(30),project_loc varchar2(30));
+desc employees1
+alter table employees1 modify project_loc varchar2(100)
+alter table employees1 modify (project_loc varchar2(120),project_tl varchar2(100))   
+drop table employees3
+desc employees3
+alter table employees5 drop column employee_name
+desc employees5
+-- set unused /drop same workability
+alter table employees5 add (project_doma varchar2(30),project_flo varchar2(30));
+alter table employees5 set unused column employee_age
+alter table employees5 set unused (project_tl,project_flo)
+-- read only and read write
+alter table employees read only
+alter table employees read write
+-- flashback is restoring
+flashback table employees3 to before drop
+select * from employees3
+create table employees6 as select * from employees;
+select * from employees6
+delete employees6 
+-- delete deletes row by row
+create table employees7 as select * from employees;
+truncate table employees7
+-- truncate delete all at a time 
+-- comments to the  columns and table   
+comment on column employees.employee_id is 'this is the id of table'
+comment on table employees is 'this is the employees of table'
+-- rename
+alter table employees rename column EMPLOYEE_NAME to employee_first_name
+select * from employees
+--  rename table name
+rename employees to employees_data
+select * from employees_data
+alter table employees_data rename to employees
+select * from employees
 
 

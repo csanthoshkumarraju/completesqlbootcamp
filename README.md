@@ -302,4 +302,36 @@ select employees.employee_id,employees.employee_name,employees1.employee_project
 where employees.employee_id(+) = employees1.employee_id
 -- entity relation tables
 --one to many/many to one
+-- subqueries/inline views
+-- single subquery note :-!!! here where employee_id  (select employee_id ) employee_id is same column
+select employee_name from employees where employee_id =
+  (select employee_id from employees where employee_age =22)
+select employee_name from employees where employee_id =
+  (select employee_id from employees where employee_age > 22) --error returns multiple queries 
+select employee_email from employees where employee_id =
+  (select employee_id from employees where employee_age = 24)
+-- multiple subqueries
+select employee_id,employee_name from employees where employee_name in 
+    (select employee_name from employees where employee_age in (22,23,24))
+select employee_id,employee_name from employees where employee_name in 
+    (select employee_name from employees where employee_age > 22)
+select employee_id,employee_name from employees where employee_name,employee_age in 
+    (select employee_name,employee_age from employees where employee_age in (22,23,24))
+--  subqueries as a table name 
+select * from (select employee_id,employee_name from employees)
+select employee_name from (select employee_id,employee_name from employees)
+-- scalar subquery // subquery have 1 row and 1 column
+select employee_name,employee_id,employee_age from employees where employee_id =
+  (select employee_id from employees where employee_age =22)
+select employee_name from employees where employee_id =
+  (select employee_id from employees where employee_age > 22) -- error 
+--  exists
+select employee_name,employee_id,employee_age from employees where exists
+  (select employee_id from employees where employee_age =22)
+--above vs below 
+select employee_name,employee_id,employee_age from employees where employee_id =
+  (select employee_id from employees where employee_age =22)
+-- not  exists
+select employee_name,employee_id,employee_age from employees where not exists
+  (select employee_id from employees where employee_age in (22,23))
 

@@ -334,4 +334,34 @@ select employee_name,employee_id,employee_age from employees where employee_id =
 -- not  exists
 select employee_name,employee_id,employee_age from employees where not exists
   (select employee_id from employees where employee_age in (22,23))
+-- set operators
+-- output table structure like top to bottom 
+select * from employees union select * from employees1
+-- union returns unique and merging table values with id 
+select * from employees union all select * from employees1
+-- union returns all and returns first table at top and second at bottom 
+select * from employees intersect select * from employees1
+-- intersect returns only common values
+select * from employees minus select * from employees1
+-- minus returns without common values from first table 
+select employee_id,employee_name from employees union all select employee_id,employee_project_name from employees1
+select employee_id,employee_name from employees union all select employee_id,employee_project_name,employee_work_email from employees1
+-- ORA-01789: query block has incorrect number of result columns //solution//give/select same no.of columns in both tables 
+-- using null we can solve above error
+select employee_id,employee_name,null from employees union all select employee_id,employee_project_name,employee_work_email from employees1
+select employee_id,employee_name,null from employees union all 
+select employee_id,employee_project_name,employee_work_email from employees1 order by employee_id asc 
+-- set operators with sub queries
+select * from employees union (select * from employees intersect select * from employees1)
+select employee_id,employee_name from employees union all 
+          (select employee_id,employee_name from employees intersect select employee_id,employee_project_name from employees1) 
+select * from employees intersect (select * from employees intersect select * from employees1)
+select employee_id,employee_name from employees intersect 
+          (select employee_id,employee_name from employees union select employee_id,employee_project_name from employees1) 
+select employee_id,employee_name from employees union 
+          (select employee_id,employee_name from employees minus select employee_id,employee_project_name from employees1) 
+select employee_id,employee_name from employees union 
+          (select employee_id,employee_name from employees minus select employee_id,employee_project_name from employees1)
+           order by employee_id asc
+
 

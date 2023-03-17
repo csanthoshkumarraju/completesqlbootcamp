@@ -407,5 +407,49 @@ rename employees to employees_data
 select * from employees_data
 alter table employees_data rename to employees
 select * from employees
+-- dml data manipulation language // insert,update,delete,merge
+insert into employees1 values (1,'qwe',1,'qwe@gmail.com')   
+update employees set employee_name = 'mio' where employee_id =3;
+update employees set employee_name = 'miol',employee_age = 29 where employee_id =3;
+create table employees3 as select * from employees
+select * from employees3
+delete employees3
+create table employees4 as select * from employees
+delete from employees4 where employee_id = 2;
+insert into employees (employee_id,employee_name,employee_age,employee_email) values (6,'laq',29,'laq@gmail.com')
+create table employees5(employee_id number,employee_name varchar2(100),employee_age number,employee_email varchar2(100))
+insert into employees5 (employee_id ,employee_name ,employee_age ,employee_email)
+select employee_id ,employee_name ,employee_age ,employee_email from employees
+create table employees6(employee_id number,employee_name varchar2(100),employee_age number,employee_email varchar2(100))
+insert into employees6 select * from employees
+insert all 
+   into employees4 values(8,'mqp',32,'mqp@gmail.com')
+   into employees5 values(8,'mbp',10,'mbp@gmail.com') select * from employees;
+select * from employees4
+insert into employees (employee_id ,employee_name ,employee_age ,employee_email) values
+  (10,'jklop',21,'jklop@gmail.com'),
+  (15,'jkaql',23,'jkaql@gmail.com'),
+  (25,'jkmal',34,'jkmal@gmail.com');
+-- we can insert using condition
+insert all 
+  when employee_age > 20 then 
+   into employees4 values(8,'mqp',32,'mqp@gmail.com')
+   into employees5 values(8,'mbp',10,'mbp@gmail.com') select * from employees;
+--  also a pivoting insert // above query
+insert first 
+  when employee_age > 20 then
+   into employees4 values(8,'mqp',32,'mqp@gmail.com')
+   into employees5 values(8,'mbp',10,'mbp@gmail.com') select * from employees;
+select employee_id from employees offset 1 row 
+-- tcl // commit,rollback,savepoint
+delete from employees4 where employee_id = 4;
+rollback 
+select * from employees4 where employee_id = 4;
+commit
+savepoint
+select * from employees where employee_age = 22 for update;
+update employees set employee_name ='gfhjsg' where employee_age = 22
+--for update locks the rows
+
 
 

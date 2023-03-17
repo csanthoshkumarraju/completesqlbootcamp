@@ -450,6 +450,11 @@ savepoint
 select * from employees where employee_age = 22 for update;
 update employees set employee_name ='gfhjsg' where employee_age = 22
 --for update locks the rows
+--  tracking changes
+select * from employees as of timestamp (sysdate - interval '3' minute) where employee_id =2;
+-- constraints // primary key ,unique,not null,foreign key ,chech
+create table employees6(employee_id number primary key,employee_name varchar2(100) not null,employee_age number foreign key,
+    employee_email varchar2(100) unique)
 
 
 

@@ -455,6 +455,31 @@ select * from employees as of timestamp (sysdate - interval '3' minute) where em
 -- constraints // primary key ,unique,not null,foreign key ,chech
 create table employees6(employee_id number primary key,employee_name varchar2(100) not null,employee_age number foreign key,
     employee_email varchar2(100) unique)
+-- constraints check 
+create table employees2(employee_id number primary key,employee_name varchar2(100),employee_age number,employee_email varchar2(100) ,
+    constraint age_check check (employee_age <30 and employee_age > 20))
+insert into employees2 values (1,'abc',22,'abc@gmail.com')
+insert into employees2 values (2,'bcd',23,'bcd@gmail.com')
+insert into employees2 values (3,'cgh',24,'cgh@gmail.com')
+insert into employees2 values (4,'tyh',25,'tyh@gmail.com')
+insert into employees2 values (6,'jklu',40,'jkl@gmail.com') -- we can't insert against/without conditiom satisfaction
+-- add alter constraints
+alter table employees add constraint emp_name unique(employee_name)
+insert into employees values (7,'jkl',25,'jkl@gmail.com') --violating if add same name 
+insert into employees values (7,'jllkl',25,'jkl@gmail.com')
+alter table employees add unique (employee_email);
+alter table employees add check (employee_age > 20);
+--  drop constraint name
+alter table employees drop constraint employee_age > 20;
+alter table employees drop constraint employee_age > 20 cascade constraint;
+alter table employees drop constraint employee_age > 20 online;
+desc employees
+alter table employees drop constraint employee_age > 20 online;
+-- renaming constraint
+alter table employees rename constraint employee_name to employee_first
+-- disable  cfonstraint
+alter table employees disable constraint employee_age > 20;
+alter table employees enable constraint employee_age > 20;
 
 
 

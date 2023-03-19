@@ -480,6 +480,27 @@ alter table employees rename constraint employee_name to employee_first
 -- disable  cfonstraint
 alter table employees disable constraint employee_age > 20;
 alter table employees enable constraint employee_age > 20;
+-- views
+create view employees2 as select * from employees
+select * from employees2
+create view employees3 as select employee_id,employee_name from employees
+select * from employees3
+create view employees4 (ename,minage,maxmail) as 
+   select distinct employee_name, employee_age,employee_email from employees
+select * from employees4
+create or replace view employees4 (ename,minage,maxmail,eid) as 
+   select employee_name, employee_age,employee_email,employee_id from employees
+select * from employees4
+--  dml operations on views
+insert into employees4 values ('anj',22,'gghss',9)
+update employees4 set ename = 'cbsjbd' where eid = 2;
+delete from employees4
+drop table employees3
+create or replace view employees5 (ename,minage,maxmail,eid) as 
+   select employee_name, employee_age,employee_email,employee_id from employees
+select * from employees5
+drop view employees5
+
 
 
 
